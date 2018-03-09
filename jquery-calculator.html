@@ -77,24 +77,61 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
+$(document).ready(function() {
 
-// Your code here...
+  $('.panel-body').on("click", "button", function(event){
 
-$(".panel-body").on("click", ".number", function(event) {
-    console.log(event.target.textContent);
-    document.getElementById("first-number").append(event.target.textContent);
-});
+    let key = event.target.textContent;
+    let operatorArray = [ "plus", "minus", "times", "divide", "power"]
+    let value = event.currentTarget.getAttribute("value");
+    let firstNumberPlaceholder = $("#first-number").text();
+    let secondNumberPlaceholder = $("#second-number").text();
+    let operatorPlaceholder = $("#operator").text();
 
-$(".panel-body").on("click", ".operator", function(event) { 
-    console.log(event.target.textContent); 
-    document.getElementById("first-number").append(event.target.textContent);
-});
+    if (operatorPlaceholder === '' && $.inArray(value, operatorArray) === -1 && value !== 'equals'){ 
+        $("#first-number").append(key); 
+    }
+    
+    else if (firstNumberPlaceholder !== '' && $.inArray(value, operatorArray) !== -1 && value !== 'equals'){ 
+        $("#operator").text(key); 
+    }
 
-$(".panel-body").on("click", ".equal", function(event) { console.log(event.target.textContent); });
+    else if (firstNumberPlaceholder !== '' && operatorPlaceholder !== '' && value!=='equals' && value!=='clear'){ 
+        $("#second-number").append(key);
+    }
 
-$(".panel-body").on("click", ".clear", function(event) { console.log(event.target.textContent); });
-
+    else if (firstNumberPlaceholder !== '' && operatorPlaceholder !== '' && secondNumberPlaceholder!=='' && value==='equals' && value!=='clear') {
+    
+        let first = $("#first-number").text()
+        let second = $("#second-number").text()
+        let operator = $("#operator").text()
+        let res = [];
+        res.push(first);
+        res.push(operator);
+        res.push(second);
+        let oper;
+        if (res[1].charCodeAt() ===  8722){
+            oper = "-";
+        } else if (res[1].charCodeAt() === 43) {
+            oper = "+"
+        } else if (res[1].charCodeAt() === 94) {
+            oper = "**";
+        } else if (res[1].charCodeAt() === 247) {
+            oper = "/";
+        } else if (res[1].charCodeAt() === 215) {
+            oper = "*";
+        }
+        let result = eval(res[0] + oper + res[2]);
+        $("#result").text(result);
+    }
+    // (value === 'clear')
+    else {
+        $("#first-number").text('');
+        $("#second-number").text('');
+        $("#result").text('');
+        $("#operator").text('');
+    }  
+  });
 });
 
 </script>
