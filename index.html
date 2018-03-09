@@ -88,11 +88,11 @@ $(document).ready(function() {
     let secondNumberPlaceholder = $("#second-number").text();
     let operatorPlaceholder = $("#operator").text();
 
-    if (operatorPlaceholder === '' && $.inArray(value, operatorArray) === -1 && value !== 'equals'){ 
+    if (operatorPlaceholder === '' && $.inArray(value, operatorArray) === -1 && value !== 'equals' && value !== 'clear'){ 
         $("#first-number").append(key); 
     }
     
-    else if (firstNumberPlaceholder !== '' && $.inArray(value, operatorArray) !== -1 && value !== 'equals'){ 
+    else if (firstNumberPlaceholder !== '' && $.inArray(value, operatorArray) !== -1 && value !== 'equals' && value !== 'clear'){ 
         $("#operator").text(key); 
     }
 
@@ -126,10 +126,10 @@ $(document).ready(function() {
     }
     // (value === 'clear')
     else {
-        $("#first-number").text('');
-        $("#second-number").text('');
-        $("#result").text('');
-        $("#operator").text('');
+        $("#first-number").empty();
+        $("#second-number").empty();
+        $("#result").empty();
+        $("#operator").empty();
     }  
   });
 });
